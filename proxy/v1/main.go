@@ -25,6 +25,7 @@ func process(conn net.Conn) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)
 	for {
+		// 内部有优化 看着是一个一个读的 但实际里面会进行预先的批处理
 		b, err := reader.ReadByte()
 		if err != nil {
 			break

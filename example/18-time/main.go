@@ -12,7 +12,12 @@ func main() {
 	t2 := time.Date(2022, 3, 27, 2, 30, 36, 0, time.UTC)
 	fmt.Println(t)                                                  // 2022-03-27 01:25:36 +0000 UTC
 	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute()) // 2022 March 27 1 25
-	fmt.Println(t.Format("2006-01-02 15:04:05"))                    // 2022-03-27 01:25:36
+
+	// 源码中有写 进 Format 去看
+	// String returns the time formatted using the format string
+	//	"2006-01-02 15:04:05.999999999 -0700 MST"
+
+	fmt.Println(t.Format("2006-01-02 15:04:05")) // 2022-03-27 01:25:36
 	diff := t2.Sub(t)
 	fmt.Println(diff)                           // 1h5m0s
 	fmt.Println(diff.Minutes(), diff.Seconds()) // 65 3900

@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// 带类型字段的集合
 type user struct {
 	name     string
 	password string
@@ -25,6 +26,7 @@ func checkPassword(u user, password string) bool {
 	return u.password == password
 }
 
+// 大结构体的拷贝开销
 func checkPassword2(u *user, password string) bool {
 	return u.password == password
 }

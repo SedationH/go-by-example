@@ -32,6 +32,7 @@ func main() {
 	}
 }
 
+// 传递的时候咋不用 *
 func process(conn net.Conn) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)

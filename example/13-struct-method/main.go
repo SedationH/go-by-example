@@ -7,6 +7,8 @@ type user struct {
 	password string
 }
 
+// 类成员函数
+
 func (u user) checkPassword(password string) bool {
 	return u.password == password
 }
