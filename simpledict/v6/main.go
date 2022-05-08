@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 )
@@ -14,29 +15,24 @@ import (
 		5. 打印结果
 */
 func main() {
-	if len(os.Args) != 2 && len(os.Args) != 3 {
-		fmt.Fprintf(os.Stderr, `usage: simpleDict WORD [ENGINE]
-Tanslation engine supports "caiyun" and "volcengine" (default) 火山
-- https://fanyi.caiyunapp.com/
-- https://translate.volcengine.com/translate
+	if len(os.Args) != 2 {
+		fmt.Fprintf(os.Stderr, `usage: simpleDict WORD
 example: simpleDict hello
-simpleDict hello volcengine
-simpleDict hello caiyun
 		`)
 		os.Exit(1)
 	}
-	args := make([]string, 3)
-	copy(args, os.Args)
-	word, engine := args[1], args[2]
+	word := os.Args[1]
+	ctx, cancel := context.WithCancel(context.Background())
 
-	switch engine {
-	case "volcengine", "":
-		{
-			queryWithVolcengine(word)
-		}
-	case "caiyun":
-		{
-			queryWithCaiyun(word)
-		}
-	}
+	go func() {
+		queryWithVolcengine(word)
+		cancel()
+	}()
+
+	go func() {
+		queryWithCaiyun(word)
+		cancel()
+	}()
+
+	<-ctx.Done()
 }
